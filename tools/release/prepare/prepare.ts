@@ -47,10 +47,10 @@ const checkoutReleaseBranch = async () => {
 }
 
 export const prepare = series(
+  series(
+    checkoutReleaseBranch
+  ),
   parallel(
-    series(
-      checkoutReleaseBranch
-    ),
     verifyDevelopBranch, 
     verifyMasterBranch, 
     verifyWorkspace
