@@ -1,7 +1,7 @@
-import * as Git from 'nodegit';
 import { RELEASE_CONFIG } from '../config';
 import { parallel, series } from 'gulp';
 import { clean } from './clean';
+import * as git from 'simple-git/promise';
 
 const errorOnExistingBranch = (branchName: string) => (result: boolean) : void => {
   if(result) {
@@ -10,15 +10,9 @@ const errorOnExistingBranch = (branchName: string) => (result: boolean) : void =
 }
 
 const branchExists = async (branchName: string): Promise<boolean> => {
-  try {
-    const repo = await Git.Repository.open(RELEASE_CONFIG.PROJECT_PATH + '/.git');
-    const branch = await repo.getBranch(branchName);
-    return true;
-  }
-  catch (error) {
-    //If this hits an error, it means that the branch does not exist.
-    return false;
-  }
+    const repo = await git(RELEASE_CONFIG.PROJECT_PATH);
+    const branches = await repo.branchLocal();
+    return branches[branchName] !== undefined;
 }
 
 const verifyDevelopBranch = () : Promise<void> => {
@@ -33,10 +27,10 @@ const verifyMasterBranch = () : Promise<void> => {
  * Function which determines whether or not the current workspace is dirty (git).
  */
 const verifyWorkspace = async (callback: Function): Promise<any> => {
-  const repo = await Git.Repository.open(RELEASE_CONFIG.PROJECT_PATH + '/.git');
-  const status = await repo.getStatus();
+  const repo = await git(RELEASE_CONFIG.PROJECT_PATH);
+  const status = await repo.status();
 
-  if(status.length === 0){
+  if(status.files.length === 0){
     callback();
   }
   else {
@@ -45,6 +39,10 @@ const verifyWorkspace = async (callback: Function): Promise<any> => {
 }
 
 export const prepare = series(
-  parallel(verifyDevelopBranch, verifyMasterBranch, verifyWorkspace),
+  parallel(
+    verifyDevelopBranch, 
+    verifyMasterBranch, 
+    verifyWorkspace
+  ),
   clean
 );

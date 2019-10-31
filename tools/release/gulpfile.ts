@@ -6,10 +6,10 @@ import { build } from './build/build';
 import { commitChangelogAndTag } from './commit/commitChangelogAndTag';
 
 const release = series(
-  // prepare, 
+  prepare, 
   // build,
   // version,
-  commitChangelogAndTag
+  // commitChangelogAndTag
   // makeReleaseBranch,
   // mergeReleaseToDevelop,
   // mergeReleaseToMaster,
