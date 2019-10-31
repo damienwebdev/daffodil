@@ -2,7 +2,6 @@ import * as standardVersion from 'standard-version';
 import * as git from 'simple-git/promise';
 import { RELEASE_CONFIG } from '../config';
 import { series } from 'gulp'; 
-import { exec } from 'child_process';
 
 const stageAll = async (): Promise<void> => {
     await git(RELEASE_CONFIG.PROJECT_PATH).add('.');
@@ -26,6 +25,6 @@ const generateCommit  = () => standardVersion({
 });
 
 export const commitChangelogAndTag = series(
-  stageAll
-  // generateCommit
+  stageAll,
+  generateCommit
 )
