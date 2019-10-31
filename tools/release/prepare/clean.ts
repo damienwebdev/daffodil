@@ -1,6 +1,5 @@
 import * as rimraf from 'rimraf';
 import * as log from 'fancy-log';
-import { series } from 'gulp';
 
 import { RELEASE_CONFIG } from '../config';
 const DIST_PATH = RELEASE_CONFIG.PROJECT_PATH + '/dist';

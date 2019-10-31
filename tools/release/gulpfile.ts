@@ -10,10 +10,6 @@ const release = series(
   // build,
   // version,
   // commitChangelogAndTag
-  // makeReleaseBranch,
-  // mergeReleaseToDevelop,
-  // mergeReleaseToMaster,
-  // pushToRemote,
   // publish,
   // cleanup
 );

@@ -7,7 +7,7 @@ const stageAll = async (): Promise<void> => {
     await git(RELEASE_CONFIG.PROJECT_PATH).add('.');
 }
 
-const generateCommit  = () => standardVersion({
+const generateCommit = () => standardVersion({
   noVerify: true,
   sign: true,
   infile: RELEASE_CONFIG.PROJECT_PATH + '/docs/CHANGELOG.md',
