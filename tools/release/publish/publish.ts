@@ -2,15 +2,6 @@ import { series } from 'gulp';
 import * as git from 'simple-git/promise';
 import { RELEASE_CONFIG } from '../config';
 
-const mergeToDevelop = async() => {
-  const repo = await git(RELEASE_CONFIG.PROJECT_PATH);
-  await repo.mergeFromTo(
-    RELEASE_CONFIG.TEMPORARY_BRANCH_NAME, 
-    RELEASE_CONFIG.GIT_REMOTE_NAME + '/' + RELEASE_CONFIG.BASE_BRANCH,
-    ['--ff-only']
-  );
-}
-
 const mergeToMaster = async() => {
   const repo = await git(RELEASE_CONFIG.PROJECT_PATH);
   await repo.mergeFromTo(RELEASE_CONFIG.TEMPORARY_BRANCH_NAME, 'origin/master');
@@ -18,13 +9,13 @@ const mergeToMaster = async() => {
 
 export const pushToRemote = async () => {
   const repo = await git(RELEASE_CONFIG.PROJECT_PATH);
-  await repo.push('origin', RELEASE_CONFIG.BASE_BRANCH);
-  await repo.push('origin', 'origin/master');
+  await repo.push([RELEASE_CONFIG.GIT_REMOTE_NAME, 'HEAD:' + RELEASE_CONFIG.BASE_BRANCH] as any);
+  // await repo.push('origin', 'origin/master');
   // await repo.pushTags();
 }
 
 export const publish = series(
-  mergeToDevelop,
+  // mergeToDevelop,
   // mergeToMaster,
-  // pushToRemote
+  pushToRemote
 );
