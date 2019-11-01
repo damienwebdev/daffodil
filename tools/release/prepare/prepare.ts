@@ -40,8 +40,8 @@ const verifyWorkspace = async (callback: Function): Promise<any> => {
 
 const checkoutReleaseBranch = async () => {
   const repo = git(RELEASE_CONFIG.PROJECT_PATH);
+  await repo.fetch();
   await repo.checkout(RELEASE_CONFIG.BASE_BRANCH);
-  await repo.pull();
   await repo.checkoutLocalBranch(RELEASE_CONFIG.TEMPORARY_BRANCH_NAME);
   await repo.deleteLocalBranch(RELEASE_CONFIG.BASE_BRANCH);
 }
