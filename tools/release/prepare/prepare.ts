@@ -43,7 +43,6 @@ const checkoutReleaseBranch = async () => {
   await repo.fetch();
   await repo.checkout(RELEASE_CONFIG.BASE_BRANCH);
   await repo.checkoutLocalBranch(RELEASE_CONFIG.TEMPORARY_BRANCH_NAME);
-  await repo.deleteLocalBranch(RELEASE_CONFIG.BASE_BRANCH);
 }
 
 export const prepare = series(
