@@ -7,9 +7,9 @@ import { commitChangelogAndTag } from './commit/commitChangelogAndTag';
 
 const release = series(
   prepare, 
-  // build,
-  // version,
-  // commitChangelogAndTag
+  build,
+  version,
+  commitChangelogAndTag
   // publish,
   // cleanup
 );
