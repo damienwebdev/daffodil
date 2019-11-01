@@ -1,13 +1,26 @@
 import { series } from 'gulp';
-import { exec } from 'child_process';
+import * as git from 'simple-git/promise';
+import { RELEASE_CONFIG } from '../config';
 
-// merge into develop
-// merge into master
-// push master
-// push develop
-// push tag
+const mergeToDevelop = async() => {
+  const repo = await git(RELEASE_CONFIG.PROJECT_PATH);
+  await repo.mergeFromTo(RELEASE_CONFIG.TEMPORARY_BRANCH_NAME, RELEASE_CONFIG.BASE_BRANCH);
+}
 
+const mergeToMaster = async() => {
+  const repo = await git(RELEASE_CONFIG.PROJECT_PATH);
+  await repo.mergeFromTo(RELEASE_CONFIG.TEMPORARY_BRANCH_NAME, 'master');
+}
 
-const runPackagePublish = () => exec('lerna run publish');
+export const pushToRemote = async () => {
+  const repo = await git(RELEASE_CONFIG.PROJECT_PATH);
+  await repo.push('origin', RELEASE_CONFIG.BASE_BRANCH);
+  // await repo.push('origin', 'master');
+  await repo.pushTags();
+}
 
-export const publish = series(runPackagePublish);
+export const publish = series(
+  mergeToDevelop,
+  // mergeToMaster,
+  // pushToRemote
+);
