@@ -9,18 +9,18 @@ const mergeToDevelop = async() => {
 
 const mergeToMaster = async() => {
   const repo = await git(RELEASE_CONFIG.PROJECT_PATH);
-  await repo.mergeFromTo(RELEASE_CONFIG.TEMPORARY_BRANCH_NAME, 'master');
+  await repo.mergeFromTo(RELEASE_CONFIG.TEMPORARY_BRANCH_NAME, 'origin/master');
 }
 
 export const pushToRemote = async () => {
   const repo = await git(RELEASE_CONFIG.PROJECT_PATH);
   await repo.push('origin', RELEASE_CONFIG.BASE_BRANCH);
-  // await repo.push('origin', 'master');
+  await repo.push('origin', 'master');
   await repo.pushTags();
 }
 
 export const publish = series(
   mergeToDevelop,
-  // mergeToMaster,
-  // pushToRemote
+  mergeToMaster,
+  pushToRemote
 );
