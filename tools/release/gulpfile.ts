@@ -13,7 +13,7 @@ const release = series(
   version,
   commitChangelogAndTag,
   publish,
-  cleanup
+  // cleanup
 );
 
 export default release;

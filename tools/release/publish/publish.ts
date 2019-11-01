@@ -22,5 +22,5 @@ export const pushToRemote = async () => {
 export const publish = series(
   mergeToDevelop,
   mergeToMaster,
-  pushToRemote
+  // pushToRemote
 );
