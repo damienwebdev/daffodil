@@ -16,7 +16,7 @@ export const pushToRemote = async () => {
   const repo = await git(RELEASE_CONFIG.PROJECT_PATH);
   await repo.push('origin', RELEASE_CONFIG.BASE_BRANCH);
   await repo.push('origin', 'origin/master');
-  await repo.pushTags();
+  // await repo.pushTags();
 }
 
 export const publish = series(

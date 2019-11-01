@@ -10,8 +10,8 @@ import { publish } from './publish/publish';
 const release = series(
   prepare, 
   // build,
-  // version,
-  // commitChangelogAndTag,
+  version,
+  commitChangelogAndTag,
   publish,
   cleanup
 );
