@@ -9,11 +9,11 @@ import { publish } from './publish/publish';
 
 const release = series(
   prepare, 
-  // build,
+  build,
   version,
   commitChangelogAndTag,
   publish,
-  // cleanup
+  cleanup
 );
 
 export default release;
