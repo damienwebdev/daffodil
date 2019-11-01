@@ -2,9 +2,9 @@ import { series } from 'gulp';
 import * as git from 'simple-git/promise';
 import { RELEASE_CONFIG } from '../config';
 
-export const removeTemporaryBranch = async() => {
+const removeTemporaryBranch = async() => {
   const repo = await git(RELEASE_CONFIG.PROJECT_PATH);
-  await repo.checkout(RELEASE_CONFIG.BASE_BRANCH);
+  await repo.checkout(RELEASE_CONFIG.GIT_REMOTE_NAME + '/' + RELEASE_CONFIG.BASE_BRANCH);
   await repo.deleteLocalBranch(RELEASE_CONFIG.TEMPORARY_BRANCH_NAME);
 }
 
