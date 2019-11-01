@@ -1,6 +1,6 @@
 import { series } from 'gulp';
-const { exec } = require('child_process');
+import { exec } from 'gulp-execa';
 
-const lernaBuild = () => exec('lerna run build --stream');
+const lernaBuild = async () => await exec('lerna run build --stream');
 
 export const build = series(lernaBuild);
