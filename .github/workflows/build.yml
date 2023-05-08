@@ -8,7 +8,12 @@ on:
   pull_request:
     branches:
       - develop
+<<<<<<< HEAD
 
+=======
+      - allow_fork_builds
+#test
+>>>>>>> e9b7a45a2 (this isnt suspiscious)
 jobs:
   build:
     name: Build
